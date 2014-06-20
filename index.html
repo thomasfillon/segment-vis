@@ -1,9 +1,29 @@
+<!doctype html>
+<html class="no-js" lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>segment-vis</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <script src="js/highlight.pack.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body>
 
-#Segment visualiser
+  <header>
+    <nav>
+      <ul>
+        <li><a class="icon-github" href="https://github.com/Ircam-RnD/segment-vis">Source on GitHub</a></li>
+        <li class="updated"><em>Last updated: 20/June/2014</em></li>
+      </ul>
+    </nav>
+  </header>
 
-Use this module to visualise data segments over a shared timeline.  
-The module relies on a [timeline](https://github.com/Ircam-RnD/timeLine) instance.
+  <hr>
 
+  <section>
+    <h1 id="segment-visualiser">Segment visualiser</h1>
+<p>Use this module to visualise data segments over a shared timeline.<br>The module relies on a <a href="https://github.com/Ircam-RnD/timeLine">timeline</a> instance.</p>
 <div class="only-readme">
 <h2>Demo</h2>
 <p>A woring demo for this module can be found here <a href="https://ircam-rnd.github.io/segment-vis/">here</a></p>
@@ -11,34 +31,23 @@ The module relies on a [timeline](https://github.com/Ircam-RnD/timeLine) instanc
 
 <div class="timeline"></div>
 
-## Status
-
-This library is under heavy development and subject to change.  
-Evert new API breaking change we will be adding snapshots to the repository so you can always fetch a working copy.
-
-For an in depth  explanation on the philosophy and usage of this library please refer to [this blog post](http://wave.ircam.fr/publications/visual-tools/).
-
-## Usage
-
-### Data
-Will be passed to a timeLine later. In this case a Backbone collection.
-
-```js
-var collection = new Backbone.Collection([{
+<h2 id="status">Status</h2>
+<p>This library is under heavy development and subject to change.<br>Evert new API breaking change we will be adding snapshots to the repository so you can always fetch a working copy.</p>
+<p>For an in depth  explanation on the philosophy and usage of this library please refer to <a href="http://wave.ircam.fr/publications/visual-tools/">this blog post</a>.</p>
+<h2 id="usage">Usage</h2>
+<h3 id="data">Data</h3>
+<p>Will be passed to a timeLine later. In this case a Backbone collection.</p>
+<pre><code class="lang-js">var collection = new Backbone.Collection([{
     "begin": "0",
     "duration": "16121",
     "end": "16121",
     "color": "#A9d"
   }, { "begin": "1" …},
   }, { "begin": "3" …},
-]);
-```
-
-## DataView
-If your data doesn't match the spected structure you can pass in a dataView that lets the visualizer how to access and manipulate the data.
-
-```js
-// Sample dataView tells us how to access the data
+]);</code></pre>
+<h2 id="dataview">DataView</h2>
+<p>If your data doesn't match the spected structure you can pass in a dataView that lets the visualizer how to access and manipulate the data.</p>
+<pre><code class="lang-js">// Sample dataView tells us how to access the data
 var view = {
   // tell d3 which is our key for sorting
   sortIndex: function(d) {
@@ -61,37 +70,23 @@ var view = {
     if(!v) return d.get('color');
     d.set('color', v);
   }
-};
-```
-
-### Creating the Visualiser layer
-```js
-var seg = segmentVis()
+};</code></pre>
+<h3 id="creating-the-visualiser-layer">Creating the Visualiser layer</h3>
+<pre><code class="lang-js">var seg = segmentVis()
   .data(collection.models)
   .dataView(view)
   .name('segments')  
-  .opacity(0.5);
-```
-
-### Creating the timeLine layout
-```js
-var graph = timeLine()
+  .opacity(0.5);</code></pre>
+<h3 id="creating-the-timeline-layout">Creating the timeLine layout</h3>
+<pre><code class="lang-js">var graph = timeLine()
   .width(800)
   .height(150)
-  .xDomain([0, 100]);
-
-```
-
-### Adding the Visualiser layer and drawing everything
-
-```js
-// we add layers like this
+  .xDomain([0, 100]);</code></pre>
+<h3 id="adding-the-visualiser-layer-and-drawing-everything">Adding the Visualiser layer and drawing everything</h3>
+<pre><code class="lang-js">// we add layers like this
 graph.layer(seg);
 // we pass in the drawing method from our timeline object
-d3.select('.timeline').call(graph.draw);
-
-```
-
+d3.select('.timeline').call(graph.draw);</code></pre>
 <div class="only-readme">
 <h2>License</h2>
 <p>This module is released under the <a href="http://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause license</a>.</p>
@@ -147,9 +142,9 @@ d3.select('.timeline').call(graph.draw);
                 }];
 
   document.addEventListener('DOMContentLoaded', function() {
-    
+
     document.querySelector('.timeline').innerHTML = '';
-    
+
     // Timeline
     // --------
     var graph = timeLine()
@@ -169,3 +164,17 @@ d3.select('.timeline').call(graph.draw);
 
     });
 </script>
+
+  </section>
+
+  <hr>
+
+  <footer>
+    This code is part of the <a href="http://wave.ircam.fr">WAVE project</a><br>
+    funded by ANR (The French National Research Agency)<br>
+    ContInt program<br>
+    2012-2015
+  </footer>
+  <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
