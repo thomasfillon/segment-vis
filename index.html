@@ -14,87 +14,27 @@
     <nav>
       <ul>
         <li><a class="icon-github" href="https://github.com/Ircam-RnD/segment-vis">Source on GitHub</a></li>
-        <li class="updated"><em>Last updated: 20/June/2014</em></li>
+        <li class="updated"><em>Last updated: 30/June/2014</em></li>
       </ul>
     </nav>
   </header>
-
+  
   <hr>
 
   <section>
-    <h1 id="segment-visualiser">Segment visualiser</h1>
+    <h2 id="segment-editor">Segment editor</h2>
+<blockquote>
+<p>Segment visualiser component</p>
+</blockquote>
 <p>Use this module to visualise data segments over a shared timeline.<br>The module relies on a <a href="https://github.com/Ircam-RnD/timeLine">timeline</a> instance.</p>
-<div class="only-readme">
-<h2>Demo</h2>
-<p>A woring demo for this module can be found here <a href="https://ircam-rnd.github.io/segment-vis/">here</a></p>
-</div>
-
-<div class="timeline"></div>
-
-<h2 id="status">Status</h2>
+<h3 id="status">Status</h3>
 <p>This library is under heavy development and subject to change.<br>Evert new API breaking change we will be adding snapshots to the repository so you can always fetch a working copy.</p>
 <p>For an in depth  explanation on the philosophy and usage of this library please refer to <a href="http://wave.ircam.fr/publications/visual-tools/">this blog post</a>.</p>
-<h2 id="usage">Usage</h2>
-<h3 id="data">Data</h3>
-<p>Will be passed to a timeLine later. In this case a Backbone collection.</p>
-<pre><code class="lang-js">var collection = new Backbone.Collection([{
-    "begin": "0",
-    "duration": "16121",
-    "end": "16121",
-    "color": "#A9d"
-  }, { "begin": "1" …},
-  }, { "begin": "3" …},
-]);</code></pre>
-<h2 id="dataview">DataView</h2>
-<p>If your data doesn't match the spected structure you can pass in a dataView that lets the visualizer how to access and manipulate the data.</p>
-<pre><code class="lang-js">// Sample dataView tells us how to access the data
-var view = {
-  // tell d3 which is our key for sorting
-  sortIndex: function(d) {
-    return d.get('begin');
-  },
-   // how to retrieve or set the value used as the start of the segment
-  start: function(d, v) {
-    // no value, we retrieve
-    if(!v) return +d.get('begin');
-    // yesvalue we set :)
-    d.set('begin', v);
-  },
-  // how to retrieve or set the value used as the duration of the segment
-  duration: function(d, v) {
-    if(!v) return +d.get('duration');
-    d.set('duration', v);
-  },
-  // how to retrieve or set the value used for the color of the segment
-  color: function(d, v) {
-    if(!v) return d.get('color');
-    d.set('color', v);
-  }
-};</code></pre>
-<h3 id="creating-the-visualiser-layer">Creating the Visualiser layer</h3>
-<pre><code class="lang-js">var seg = segmentVis()
-  .data(collection.models)
-  .dataView(view)
-  .name('segments')  
-  .opacity(0.5);</code></pre>
-<h3 id="creating-the-timeline-layout">Creating the timeLine layout</h3>
-<pre><code class="lang-js">var graph = timeLine()
-  .width(800)
-  .height(150)
-  .xDomain([0, 100]);</code></pre>
-<h3 id="adding-the-visualiser-layer-and-drawing-everything">Adding the Visualiser layer and drawing everything</h3>
-<pre><code class="lang-js">// we add layers like this
-graph.layer(seg);
-// we pass in the drawing method from our timeline object
-d3.select('.timeline').call(graph.draw);</code></pre>
-<div class="only-readme">
-<h2>License</h2>
-<p>This module is released under the <a href="http://opensource.org/licenses/BSD-3-Clause">BSD-3-Clause license</a>.</p>
 
-<h2>Acknowledgments</h2>
-<p>This code is part of the <a href="http://wave.ircam.fr">WAVE project</a>, funded by ANR (The French National Research Agency), <em>ContInt</em> program, 2012-2015.</p>
-</div>
+    <h3 id="demo">Demo</h3>
+<div class="timeline"></div>
 
+<p>This demo shows a simple segmented data visualization.</p>
 <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.8/d3.min.js"></script>
 <script src="//rawgit.com/ircam-rnd/segment-vis/master/segment-vis.min.js"></script>
 <script src="//rawgit.com/ircam-rnd/timeLine/master/timeLine.min.js"></script>
@@ -164,16 +104,66 @@ d3.select('.timeline').call(graph.draw);</code></pre>
 
     });
 </script>
+    <h3 id="usage">Usage</h3>
+<h4 id="data">Data</h4>
+<p>Will be passed to a timeLine later. In this case a Backbone collection.</p>
+<pre><code class="lang-js">var collection = new Backbone.Collection([{
+    &quot;begin&quot;: &quot;0&quot;,
+    &quot;duration&quot;: &quot;16121&quot;,
+    &quot;end&quot;: &quot;16121&quot;,
+    &quot;color&quot;: &quot;#A9d&quot;
+  }, { &quot;begin&quot;: &quot;1&quot; …},
+  }, { &quot;begin&quot;: &quot;3&quot; …},
+]);
+</code></pre>
+<h3 id="dataview">DataView</h3>
+<p>If your data doesn&#39;t match the expected structure you can pass in a dataView that lets the visualizer how to access and manipulate the data.</p>
+<pre><code class="lang-js">// Sample dataView tells us how to access the data
+var view = {
+  // tell d3 which is our key for sorting
+  sortIndex: function(d) {
+    return d.get(&#39;begin&#39;);
+  },
+   // how to retrieve or set the value used as the start of the segment
+  start: function(d, v) {
+    // no value, we retrieve
+    if(!v) return +d.get(&#39;begin&#39;);
+    // yesvalue we set :)
+    d.set(&#39;begin&#39;, v);
+  },
+  // how to retrieve or set the value used as the duration of the segment
+  duration: function(d, v) {
+    if(!v) return +d.get(&#39;duration&#39;);
+    d.set(&#39;duration&#39;, v);
+  },
+  // how to retrieve or set the value used for the color of the segment
+  color: function(d, v) {
+    if(!v) return d.get(&#39;color&#39;);
+    d.set(&#39;color&#39;, v);
+  }
+};
+</code></pre>
+<h4 id="creating-the-visualiser-layer">Creating the Visualiser layer</h4>
+<pre><code class="lang-js">var seg = segmentVis()
+  .data(collection.models)
+  .dataView(view)
+  .name(&#39;segments&#39;)  
+  .opacity(0.5);
+</code></pre>
+<h4 id="creating-the-timeline-layout">Creating the timeLine layout</h4>
+<pre><code class="lang-js">var graph = timeLine()
+  .width(800)
+  .height(150)
+  .xDomain([0, 100]);
+</code></pre>
 
   </section>
 
   <hr>
 
   <footer>
-    This code is part of the <a href="http://wave.ircam.fr">WAVE project</a><br>
-    funded by ANR (The French National Research Agency)<br>
-    ContInt program<br>
-    2012-2015
+    <p>This code is part of the <a href="http://wave.ircam.fr">WAVE project</a>,<br>funded by ANR (The French National Research Agency),<br><em>ContInt</em> program,<br>2012-2015.</p>
+
   </footer>
   <script>hljs.initHighlightingOnLoad();</script>
   </body>
